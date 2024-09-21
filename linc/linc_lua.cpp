@@ -58,46 +58,46 @@ namespace linc {
 
             if (strchr(what, 'S')) {
 
-                if (dbg.source != NULL) {
+                if (dbg.source) {
                     ar->__FieldRef(HX_CSTRING("source")) = ::String(dbg.source);
                 }
 
-                if (dbg.short_src != NULL) {
+                if (dbg.short_src) {
                     ar->__FieldRef(HX_CSTRING("short_src")) = ::String(dbg.short_src);
                 }
 
-                if (dbg.linedefined != NULL) {
+                if (dbg.linedefined) {
                     ar->__FieldRef(HX_CSTRING("linedefined")) = (int)dbg.linedefined;
                 }
 
-                if (dbg.lastlinedefined != NULL) {
+                if (dbg.lastlinedefined) {
                     ar->__FieldRef(HX_CSTRING("lastlinedefined")) = (int)dbg.lastlinedefined;
                 }
 
-                if (dbg.what != NULL) {
+                if (dbg.what) {
                     ar->__FieldRef(HX_CSTRING("what")) = ::String(dbg.what);
                 }
 
             }
 
             if (strchr(what, 'n')) {
-                if (dbg.name != NULL) {
+                if (dbg.name) {
                     ar->__FieldRef(HX_CSTRING("name")) = ::String(dbg.name);
                 }
 
-                if (dbg.namewhat != NULL) {
+                if (dbg.namewhat) {
                     ar->__FieldRef(HX_CSTRING("namewhat")) = ::String(dbg.namewhat);
                 }
             }
 
             if (strchr(what, 'l')) {
-                if (dbg.currentline != NULL) {
+                if (dbg.currentline) {
                     ar->__FieldRef(HX_CSTRING("currentline")) = (int)dbg.currentline;
                 }
             }
 
             if (strchr(what, 'u')) {
-                if (dbg.nups != NULL) {
+                if (dbg.nups) {
                     ar->__FieldRef(HX_CSTRING("nups")) = (int)dbg.nups;
                 }
             }
@@ -192,9 +192,9 @@ namespace linc {
 
             std::stringstream buffer;
             int n = lua_gettop(L);  /* number of arguments */
-            
+
             lua_getglobal(L,"tostring");
-            
+
             for ( int i = 1;  i <= n;  ++i ){
                 const char* s = NULL;
                 size_t      l = 0;
@@ -207,7 +207,7 @@ namespace linc {
                 if ( s == NULL ){
                     return luaL_error(L,LUA_QL("tostring") " must return a string to " LUA_QL("print"));
                 }
-                
+
                 if ( i>1 ){
                     buffer << "\t";
                 }
@@ -219,7 +219,7 @@ namespace linc {
 
             // std::cout << buffer.str(); // c++ out
             print_fn(::String(buffer.str().c_str())); // hx out
-            
+
             return 0;
 
         }
@@ -248,7 +248,7 @@ namespace linc {
     } //helpers
 
     namespace callbacks {
-        
+
         static luaCallbackFN event_fn = 0;
         static int luaCallback(lua_State *L){
 
